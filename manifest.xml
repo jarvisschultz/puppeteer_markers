@@ -1,0 +1,17 @@
+<package>
+  <description brief="puppeteer_markers">
+
+     marker_node
+
+  </description>
+  <author>puppeteer</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/marker_node</url>
+
+  <depend package="roscpp"/>
+  <depend package="puppeteer_msgs"/>
+  <depend package="visualization_msgs"/>
+</package>
+
+
