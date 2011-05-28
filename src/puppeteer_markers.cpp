@@ -25,15 +25,16 @@
 // Objects and Functions
 //---------------------------------------------------------------------------
 
-class MarkerNode {
+class PuppeteerMarkers {
 
 private:
   ros::NodeHandle n_;
-  ros::Subscriber tracker_sub;
+  ros::Subscriber state_sub;
   ros::Publisher marker_pub;
   ros::Time t_now, t_last;
   visualization_msgs::Marker mass_marker;
   visualization_msgs::Marker cart_marker;
+  float dt;
 
 public:
   PuppeteerMarkers() {
@@ -44,7 +45,7 @@ public:
 
     // set marker properties for mass_marker
     mass_marker.header.frame_id = "/openni_depth_optical_frame";
-    mass_marker.ns = "mass_marker";
+    mass_marker.ns = "estimator_mass";
     mass_marker.id = 0;
     mass_marker.type = visualization_msgs::Marker::SPHERE;
     mass_marker.scale.x = 0.05;
@@ -58,7 +59,7 @@ public:
 
     // set market properties for cart_marker
     cart_marker.header.frame_id = "/openni_depth_optical_frame";
-    cart_marker.ns = "cart_marker";
+    cart_marker.ns = "estimator_cart";
     cart_marker.id = 0;
     cart_marker.type = visualization_msgs::Marker::CUBE;
     cart_marker.scale.x = 0.15;
@@ -73,7 +74,7 @@ public:
     ROS_INFO("Starting Puppeteer Markers...\n");
   }
 
-  void markercb(const puppeteer_msgs::State &state) {
+  void statecb(const puppeteer_msgs::State &state) {
 	ROS_DEBUG("Entered state callback");
     
 	// check if the operating_condition parameter exists and set its value
@@ -97,20 +98,10 @@ public:
 	  dt = (t_now.toSec()-t_last.toSec());
 	  ROS_DEBUG("dt: %f", dt);
 
-	  // get new mass position data
-	  xm = state.x;
-	  ym = state.y;
-	  zm = state.z;
-	  
-	  // get new robot position data
-	  xc = state.xc
-	  zc = state.zc;
-	  th = state.th;
-
 	  // set mass_marker details
-	  mass_marker.pose.position.x = xm;
-	  mass_marker.pose.position.y = ym;
-	  mass_marker.pose.position.z = zm;
+	  mass_marker.pose.position.x = state.xm;
+	  mass_marker.pose.position.y = state.ym;
+	  mass_marker.pose.position.z = 3;  // hard coding this for now
 	  mass_marker.pose.orientation.x = 0.0;
 	  mass_marker.pose.orientation.y = 0.0;
 	  mass_marker.pose.orientation.z = 0.0;
@@ -118,7 +109,7 @@ public:
 	  mass_marker.header.stamp = t_now;
 	 	
 	  // set cart_marker details
-	  cart_marker.pose.position.x = xc;
+	  cart_marker.pose.position.x = state.xc;
 	  cart_marker.pose.position.y = 0;
 	  cart_marker.pose.position.z = 0;
 	  cart_marker.pose.orientation.x = 0.0;
