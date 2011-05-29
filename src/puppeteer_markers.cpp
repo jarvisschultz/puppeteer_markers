@@ -44,7 +44,7 @@ public:
     t_now = ros::Time::now();
 
     // set marker properties for mass_marker
-    mass_marker.header.frame_id = "/openni_depth_optical_frame";
+    mass_marker.header.frame_id = "/openni_rgb_optical_frame";
     mass_marker.ns = "estimator_mass";
     mass_marker.id = 0;
     mass_marker.type = visualization_msgs::Marker::SPHERE;
@@ -54,11 +54,11 @@ public:
     mass_marker.color.r = 1.0f;
     mass_marker.color.g = 0.0f;
     mass_marker.color.b = 0.0f;
-    mass_marker.color.a = 1.0;
+    mass_marker.color.a = 1.0f;
     mass_marker.lifetime = ros::Duration();
 
     // set market properties for cart_marker
-    cart_marker.header.frame_id = "/openni_depth_optical_frame";
+    cart_marker.header.frame_id = "/openni_rgb_optical_frame";
     cart_marker.ns = "estimator_cart";
     cart_marker.id = 0;
     cart_marker.type = visualization_msgs::Marker::CUBE;
@@ -68,7 +68,7 @@ public:
     cart_marker.color.r = 0.0f;
     cart_marker.color.g = 1.0f;
     cart_marker.color.b = 0.0f;
-    cart_marker.color.a = 1.0;
+    cart_marker.color.a = 1.0f;
     cart_marker.lifetime = ros::Duration();
 
     ROS_INFO("Starting Puppeteer Markers...\n");
@@ -101,7 +101,7 @@ public:
 	  // set mass_marker details
 	  mass_marker.pose.position.x = state.xm;
 	  mass_marker.pose.position.y = state.ym;
-	  mass_marker.pose.position.z = 3;  // hard coding this for now
+	  mass_marker.pose.position.z = 2;  // hard coding this for now
 	  mass_marker.pose.orientation.x = 0.0;
 	  mass_marker.pose.orientation.y = 0.0;
 	  mass_marker.pose.orientation.z = 0.0;
@@ -111,7 +111,7 @@ public:
 	  // set cart_marker details
 	  cart_marker.pose.position.x = state.xc;
 	  cart_marker.pose.position.y = 0;
-	  cart_marker.pose.position.z = 0;
+	  cart_marker.pose.position.z = 2;
 	  cart_marker.pose.orientation.x = 0.0;
 	  cart_marker.pose.orientation.y = 0.0;
 	  cart_marker.pose.orientation.z = 0.0;
