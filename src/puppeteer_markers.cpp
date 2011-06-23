@@ -5,9 +5,6 @@
 //---------------------------------------------------------------------------
 // Notes
 //---------------------------------------------------------------------------
-/*
-
- */
 
 
 //---------------------------------------------------------------------------
@@ -15,6 +12,7 @@
 //---------------------------------------------------------------------------
 
 #include <ros/ros.h>
+#include "std_msgs/String.h"
 #include <puppeteer_msgs/State.h>
 #include <visualization_msgs/Marker.h>
 
@@ -98,6 +96,11 @@ public:
 	  dt = (t_now.toSec()-t_last.toSec());
 	  ROS_DEBUG("dt: %f", dt);
 
+	  // Get initial robot height:
+	  double robot_height = 0.0;
+	  if (ros::param::has("robot_initial_height"))
+	      ros::param::get("/robot_initial_height", robot_height);
+
 	  // set mass_marker details
 	  mass_marker.pose.position.x = state.xm;
 	  mass_marker.pose.position.y = state.ym;
@@ -110,7 +113,7 @@ public:
 	 	
 	  // set cart_marker details
 	  cart_marker.pose.position.x = state.xc;
-	  cart_marker.pose.position.y = 0;
+	  cart_marker.pose.position.y = -robot_height;
 	  cart_marker.pose.position.z = 2;
 	  cart_marker.pose.orientation.x = 0.0;
 	  cart_marker.pose.orientation.y = 0.0;
