@@ -42,7 +42,7 @@ public:
     t_now = ros::Time::now();
 
     // set marker properties for mass_marker
-    mass_marker.header.frame_id = "/openni_rgb_optical_frame";
+    mass_marker.header.frame_id = "/camera_depth_optical_frame";
     mass_marker.ns = "estimator_mass";
     mass_marker.id = 0;
     mass_marker.type = visualization_msgs::Marker::SPHERE;
@@ -56,7 +56,7 @@ public:
     mass_marker.lifetime = ros::Duration();
 
     // set market properties for cart_marker
-    cart_marker.header.frame_id = "/openni_rgb_optical_frame";
+    cart_marker.header.frame_id = "/camera_depth_optical_frame";
     cart_marker.ns = "estimator_cart";
     cart_marker.id = 0;
     cart_marker.type = visualization_msgs::Marker::CUBE;
